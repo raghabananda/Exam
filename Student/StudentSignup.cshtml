@@ -1,0 +1,115 @@
+﻿@{
+    if(IsPost)
+    {
+        Student student=new Student(){
+             FirstName=Request["FirstName"],
+             LastName=Request["LastName"],
+             Gender=Request["Gender"],
+             Email=Request["Email"],
+             PassWord=Request["Password"]
+        };
+        
+        if(Request["Password"].Equals(Request["ConfirmPassword"]))
+        {
+           if(student.InsertData())
+           {
+               Response.Redirect("ThankYou.html");
+           }
+           else{
+                Response.Write("<script>alert('EmailID already exists')</script>");
+           }
+        }else{
+            Response.Write("<script>alert('Password doesn't match..')</script>");
+        }
+        
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Student signUp</title>
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="../StyleSheets/StyleSheetFPage1.css">
+        <style type="text/css">
+            h2{
+                margin-top: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h2>Exam System</h2>
+        </div>
+        <div class="container">
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-offset-1 col-sm-2">
+                   <h2><a href="../Default">Back</a></h2> 
+                </div>
+                <div class="col-sm-7">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Create new account</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="post">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">First Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" required>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">Last Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">                                    
+                                    <label class="col-sm-2 control-label">Gender</label>
+                                    <div class="col-sm-10">
+                                        <p style="padding: 0px"></p>
+                                        <input type="radio" name="Gender" value="Male" required>
+                                        <label>Male</label>
+                                        <input type="radio" name="Gender" value="Female">
+                                        <label>Female</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" name="Email" placeholder="Email" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
+                                    <div class="col-sm-10">
+                                        <p style="padding: 1px"></p>
+                                        <input type="password" class="form-control" name="ConfirmPassword" placeholder="Password" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default">Sign Up</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>

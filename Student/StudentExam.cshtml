@@ -1,0 +1,64 @@
+﻿@{
+    if(IsPost)
+    {
+        if(Request["Logout"]!=null)
+        {
+            Session.Abandon();
+            Response.Redirect("../Default");
+        }
+        
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+
+        <style type="text/css">
+                        .container{
+                            text-align: center;
+                            color: blue;
+                        }
+                         h3 {
+                            color: white;
+                            text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+                             padding: 5px;
+                          }
+                        .jumbotron{
+                           background: -webkit-linear-gradient(top, #1e5799 0%,#207cca 45%,#2989d8 50%,#207cca 90%);
+                           text-align: center;
+                           color: #fff;
+                          
+            }
+        </style>
+               
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h2>Exam System</h2>
+            <div class="container" style="text-align: right">
+                <form method="post" id="LogOutForm">
+                    <input type="hidden" name="Logout" value="Logout">
+                    <h4><a href="javascript:document.getElementById('LogOutForm').submit()" style="color: white">LogOut</a></h4>
+                </form>
+
+            </div>
+
+        </div>
+        @if(Session["FirstName"]!=null)
+        {
+            <div class="container first">
+                <h3>Hi,  @Session["FirstName"].ToString()  !!!!!!!!!</h3>
+                <h3>Welcome to ExamSystem</h3>
+                <h3><a href="StudentExamstart" class="btn btn-default">Start Exam</a></h3>
+            </div>
+}else{
+   Response.Redirect("../Default");        
+}
+    </body>
+</html>

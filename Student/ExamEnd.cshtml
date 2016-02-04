@@ -1,0 +1,44 @@
+﻿@{
+    string str=string.Empty;
+    int i=0;
+    if(!string.IsNullOrEmpty(Request.QueryString["Stud_ID"]))
+    {
+        
+        if(int.TryParse(Request.QueryString["Stud_ID"],out i))
+        {
+            Student s=new Student(){
+              StudentID=i  
+            };
+            str=s.StudentNameByID();
+        }      
+    }
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+         <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+         <link rel="stylesheet" href="../StyleSheets/StyleSheetFPage1.css">
+        <style type="text/css">
+            .Style1{
+              text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+         <div class="jumbotron">
+            <h2>Exam System</h2>
+        </div>
+        <div class="Style1">
+            <h2>Thank you!!&nbsp;@str</h2>
+            <h2>You have successfully completed your Exam</h2>  
+            <h2>See <a href="Reasult?Stud_ID=@i">Reasult</a></h2>          
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,139 @@
+﻿@{
+    string UserID=string.Empty;
+    string PassWord=string.Empty;
+    string WrongPassWord=string.Empty;
+    if(IsPost)
+    {
+        if(Request["StudentLogIn"]!=null)
+        {
+            Student student=new Student(){
+                Email=Request["StudentUserID"],
+                PassWord=Request["StudentPassWord"]
+            };
+            if(student.StudentLogIn())
+            {
+                Session["Email"]=student.Email;
+                Session["FirstName"]=student.FirstName;
+                Session["StudentID"]=student.StudentID;
+                Response.Redirect("/Student/StudentExam");
+            }else{
+                WrongPassWord="Wrong UserID or PassWord";
+            }
+        }
+        if(Request["AdminLogIn"]!=null)
+        {
+            UserID=Request["AdminUserID"];
+            PassWord=Request["AdminPassWord"];
+            if(UserID.Equals("Admin@Admin.com")&&PassWord.Equals("Admin"))
+            {
+                Session["AdminID"]="Admin";                
+                Response.Redirect("AdminMain");
+            }
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>OnlineExam</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="StyleSheets/StyleSheetFPage1.css">
+        <script src="../Script/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function preventBack(){window.history.forward();}
+             setTimeout("preventBack()", 0);
+             window.onunload=function(){null};
+        </script>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h2>Exam System</h2>
+        </div>
+        <div class="Banner">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-5">
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2>Admin LogIn</h2>
+                            </div>
+                            <div class="panel-body">
+                                <form class="form-horizontal" method="post" id="Form1">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">User ID</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" name="AdminUserID" class="form-control" placeholder="User ID" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" name="AdminPassWord" placeholder="Password" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-10">
+                                            <button type="submit" name="AdminLogIn" value="AdminLogIn" class="btn btn-primary">Log In</button>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-5">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2>Student LogIn</h2>
+                            </div>
+                            <div class="panel-body">
+                                <div style="text-align: center">
+                                    <label>@WrongPassWord</label>
+                                </div>
+
+                                <form class="form-horizontal" method="post" id="Form2">
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">User ID</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="StudentUserID" placeholder="User ID" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" name="StudentPassWord" placeholder="Password" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3"></div>
+                                        <div class="col-sm-3">
+                                            <button type="submit" name="StudentLogIn" value="StudentLogIn" class="btn btn-primary">Log In</button>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label>New User?</label>
+                                            <a href="../Student/StudentSignup">Sign Up</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div style="text-align: center">
+                <label>@@CopyRight ExmSystem</label>
+            </div>
+        </footer>
+    </body>
+</html>

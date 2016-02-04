@@ -1,0 +1,26 @@
+body {
+ 
+}
+        .jumbo{
+                background: -webkit-linear-gradient(top, #1e5799 0%,#207cca 45%,#2989d8 50%,#207cca 90%);
+                text-align: center;
+                color: #fff;
+                height: 50px;
+                margin-top: -20px;
+              }
+            
+            h2 {
+                color: white;
+                text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+                 padding: 5px;
+              }
+           
+            .navfirst{ 
+               float: right;
+               position: relative;
+               color: black;
+              }
+            table{
+                margin-top: 30px;
+              }
+

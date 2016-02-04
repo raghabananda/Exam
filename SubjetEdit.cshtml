@@ -1,0 +1,119 @@
+﻿@{
+    Database Db=Database.Open("ExamSystem");
+    string SelectCommand="SELECT [ID], [SubjectName] FROM [Subject]";
+    IEnumerable<dynamic> Datas=Db.Query(SelectCommand);
+    if(IsPost)
+    {
+         if(Request["Logout"].Equals("Logout"))
+        {
+            Session.Abandon();          
+            Response.Redirect("Default");
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+        <script src="Script/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="bootstrap.3.3.5/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="StyleSheets/StyleSheetFPage1.css">
+        <style type="text/css">
+            #header{
+                height: 100px;
+            }
+            nav{
+                margin-top: -30px;
+            }   
+            h3{
+                margin-top: -16px;
+            }                   
+        </style>
+    </head>
+    <body>
+        @try{
+        
+        
+        if(Session["AdminID"]!=null)
+        {
+             if(Session["AdminID"].ToString().Equals("Admin"))
+                {
+                     <div id="header" class="jumbotron">
+            <h3>Exam System</h3>
+        </div>
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Student</a></li>
+                        <li><a href="Subject">Subject</a></li>
+                        <li><a href="AdminDataEntry">Question</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">View Database<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Student Log</a></li>
+                                <li><a href="SubjetEdit">Subject</a></li>
+                                <li><a href="QuestionEdit">Question</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form method="post" id="LogOutForm">
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <li>
+                                <input type="hidden" name="Logout" value="Logout">
+                                <a href="javascript:document.getElementById('LogOutForm').submit()">Log Out</a>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+   
+                <div class="container">                    
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Subject Database</h2>
+
+                        </div>
+                        <div class="panel-body">
+                            <ol>
+                                @foreach(var item in Datas)
+                                {                        
+                                    <li>
+                                        <label>@item.SubjectName</label>
+                                        <a href="SubjectEditor?SubjectID=@item.ID">Edit</a>
+                                        <label> | </label>
+                                        <a href="#">Delete</a>
+                                    </li>
+                                }
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                }
+           }else{
+                Response.Redirect("Default");
+           }
+ }catch(Exception ex)
+{
+    Response.Redirect("Default");
+}
+    </body>
+</html>

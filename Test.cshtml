@@ -1,0 +1,41 @@
+﻿@{
+    string str="Page can't be opened";
+    if(IsPost)
+    {
+        Session.Abandon();
+        Response.Redirect("TestAdmin.cshtml");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    <body>
+
+        <div>
+
+               @try{
+                    if(!string.IsNullOrEmpty(Session["UserID"].ToString()))
+                {
+                    <label>@Session["UserID"].ToString()</label>
+                }
+               else{
+                   <h1>Page not found</h1>
+               }
+               }catch(Exception ex)
+               {
+                   Response.Redirect("TestAdmin");
+               }
+              
+            
+          
+           
+            <form id="logoutForm" method="post">
+                <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+            </form>
+        </div>       
+    </body>
+</html>

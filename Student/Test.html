@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="../bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+    </head>
+    <body>
+        <p>Check this</p>
+        <input type="radio" name="x" value="1" class="x" onclick="Paint()">
+        <label>1</label><br>
+        <input type="radio" name="x" value="2" class="x" onclick="Paint()">
+        <label>2</label><br>
+        <input type="radio" name="x" value="3" class="x" onclick="Paint()">
+        <label>3</label><br>
+        <input type="radio" name="x" value="4" class="x" onclick="Paint()">
+        <label>4</label><br>
+        <input type="radio" name="x" value="5" class="x" onclick="Paint()">
+        <label>5</label><br>
+        <button class="btn btn-default" id="btnd">Button</button>
+        <script type="text/javascript">
+            function Paint() {               
+                document.getElementById('btnd').setAttribute("class","btn btn-success");
+            }
+        </script>
+    </body>
+</html>

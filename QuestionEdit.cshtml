@@ -1,0 +1,189 @@
+﻿@{    
+      int i=0;
+      IEnumerable<dynamic> Datas=null;
+      string SubjName=string.Empty,Error = string.Empty;
+      dynamic Data=null;
+      dynamic dyn=null;
+
+    if(!string.IsNullOrEmpty(Request.QueryString["S_ID"]))
+    {
+        try{
+             Database Db=Database.Open("ExamSystem");
+        string SelectCommand="SELECT [QuestionID], [SubjectID], [Question], [A], [B], [C], [D], [Answer] FROM [Question] WHERE [SubjectID]=@0" ;
+        Datas=Db.Query(SelectCommand,Request.QueryString["S_ID"]);
+
+        Database Db1=Database.Open("ExamSystem");
+        string _SelectCommand="SELECT [ID], [SubjectName] FROM [Subject] WHERE [ID] = @0";
+        dyn=Db1.QuerySingle(_SelectCommand,Request.QueryString["S_ID"]);
+        SubjName=dyn.SubjectName;
+        }catch(Exception ex)
+        {
+            Response.Write("<label>Server Error</label>");
+        }
+       
+    }
+    else
+    {
+        Database Db=Database.Open("ExamSystem");
+        string SelectCommand="SELECT [QuestionID], [SubjectID], [Question], [A], [B], [C], [D], [Answer] FROM [Question]" ;
+        Datas=Db.Query(SelectCommand);
+    }
+
+    if(IsPost)
+    {
+        if(Request["Logout"].Equals("Logout"))
+        {
+            Session.Abandon();          
+            Response.Redirect("Default");
+        }
+    }
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap.3.3.5/Content/bootstrap-theme.min.css">
+        <script src="Script/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="bootstrap.3.3.5/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="StyleSheets/StyleSheetFPage1.css">
+        <style type="text/css">
+            #header{
+                height: 100px;
+            }
+            nav{
+                margin-top: -30px;
+            }   
+            h3{
+                margin-top: -16px;
+            }                   
+        </style>
+
+    </head>
+    <body>
+        @try{
+            if(Session["AdminID"]!=null)
+            {
+                if(Session["AdminID"].ToString().Equals("Admin"))
+                {                                   
+                    <div id="header" class="jumbotron">
+                        <h3>Exam System</h3>
+                    </div>
+
+                    <nav class="navbar navbar-default">
+                        <div class="container">
+
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                                    <li><a href="#">Student</a></li>
+                                    <li><a href="Subject">Subject</a></li>
+                                    <li><a href="AdminDataEntry">Question</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">View Database<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Student Log</a></li>
+                                            <li><a href="SubjetEdit">Subject</a></li>
+                                            <li><a href="QuestionEdit">Question</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <form method="post" id="LogOutForm">
+                                    <ul class="nav navbar-nav navbar-right">
+
+                                        <li>
+                                            <input type="hidden" name="Logout" value="Logout">
+                                            <a href="javascript:document.getElementById('LogOutForm').submit()">Log Out</a>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </nav>
+
+
+                    <div class="container">
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                               <div class="row">
+                                   <div class="col-sm-6">
+                                        @if(!string.IsNullOrEmpty(SubjName))
+                                          {
+                                            <h2>@SubjName</h2>
+                                          }
+                                          else{
+                                             <h2>All Questions</h2>
+                                          }
+                                   </div>
+                                   <div class="col-sm-6">
+                                      <ul class="nav navbar-nav">                                    
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">View Question<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            @foreach(var item in Subject.SubjectID())
+                                            {
+                                                 <li><a href="QuestionEdit?S_ID=@item.ID">@item.SubjectName</a></li>
+                                            }
+                                          
+                                           
+                                        </ul>
+                                    </li>
+                                </ul>
+                                   </div>
+                               </div>
+                               
+                            </div>
+                            <div class="panel-body">
+                                @if(Datas.ToArray().Length!=0){
+                                     foreach(var item in Datas)
+                                {                                   
+                                    <div style="font-weight: 900">
+                                        <label>Q:@(++i)</label>
+                                        <label>@item.Question</label>
+                                        <ol type="A">
+                                             <li><label>@item.A</label></li>
+                                             <li><label>@item.B</label></li>
+                                             <li><label>@item.C</label></li>
+                                             <li><label>@item.D</label></li>
+                                        </ol>
+                                    </div>
+                                    <div>
+                                        <label>Answer: </label>
+                                        <label>@item.Answer</label>
+                                    </div>
+                                    <div>
+                                        <a href="QuestonEditor?QuestionID=@item.QuestionID">Edit</a> |
+                                        <a href="">Delete</a>
+                                    </div><hr>
+                                }
+                                }else{
+                                    <label>NO Question found</label>
+                                }
+                               
+
+                            </div>
+                        </div>
+                    </div>
+            }
+    }else{
+                Response.Redirect("Default");
+            }
+}catch(Exception ex)
+{
+   <label>Some Error!!!!!!!!!</label>
+}
+    </body>
+</html>

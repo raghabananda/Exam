@@ -1,0 +1,16 @@
+body {
+    font-family: Arial;
+}
+.jumbotron{
+     background: -webkit-linear-gradient(top, #1e5799 0%,#207cca 45%,#2989d8 50%,#207cca 90%);
+     text-align: center;
+     color: #fff;
+     height: 130px;
+}
+
+.Banner {
+  background: #94adee;
+}
+footer{
+    margin-top: 150px;
+}

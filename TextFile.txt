@@ -1,0 +1,31 @@
+string DeleteCommand="DELETE FROM [Subject] WHERE [ID] = @ID" 
+string InsertCommand="INSERT INTO [Subject] ([SubjectName]) VALUES (@SubjectName)" 
+string SelectCommand="SELECT [ID], [SubjectName] FROM [Subject]" 
+string UpdateCommand="UPDATE [Subject] SET [SubjectName] = @SubjectName WHERE [ID] = @ID"
+
+
+
+string DeleteCommand="DELETE FROM [Question] WHERE [QuestionID] = @QuestionID" 
+string InsertCommand="INSERT INTO [Question] ([SubjectID], [Question], [A], [B], [C], [D], [Answer]) VALUES (@SubjectID, @Question, @A, @B, @C, @D, @Answer)" 
+string SelectCommand="SELECT [QuestionID], [SubjectID], [Question], [A], [B], [C], [D], [Answer] FROM [Question]" 
+string UpdateCommand="UPDATE [Question] SET [SubjectID] = @SubjectID, [Question] = @Question, [A] = @A, [B] = @B, [C] = @C, [D] = @D, [Answer] = @Answer WHERE [QuestionID] = @QuestionID">
+ 
+
+
+string DeleteCommand="DELETE FROM [Student] WHERE [StudentID] = @StudentID" 
+string InsertCommand="INSERT INTO [Student] ([FirstName], [LastName], [Gender], [Email], [PassWord]) VALUES (@FirstName, @LastName, @Gender, @Email, @PassWord)" 
+string SelectCommand="SELECT [StudentID], [FirstName], [LastName], [Gender], [Email], [PassWord] FROM [Student]" 
+string UpdateCommand="UPDATE [Student] SET [FirstName] = @FirstName, [LastName] = @LastName, [Gender] = @Gender, [Email] = @Email, [PassWord] = @PassWord WHERE [StudentID] = @StudentID">
+ 
+
+
+string DeleteCommand="DELETE FROM [StudentExam] WHERE [ID] = @ID" ;
+string InsertCommand="INSERT INTO [StudentExam] ([StudentID], [QuestionID], [Answer]) VALUES (@StudentID, @QuestionID, @Answer)" ;
+string SelectCommand="SELECT [ID], [StudentID], [QuestionID], [Answer] FROM [StudentExam]" ;
+string UpdateCommand="UPDATE [StudentExam] SET [StudentID] = @StudentID, [QuestionID] = @QuestionID, [Answer] = @Answer WHERE [ID] = @ID";
+
+
+string DeleteCommand="DELETE FROM [StudentExam] WHERE [ID] = @ID" 
+string InsertCommand="INSERT INTO [StudentExam] ([StudentID], [QuestionID], [Answer]) VALUES (@StudentID, @QuestionID, @Answer)" 
+string SelectCommand="SELECT [ID], [StudentID], [QuestionID], [Answer] FROM [StudentExam]" 
+string UpdateCommand="UPDATE [StudentExam] SET [StudentID] = @StudentID, [QuestionID] = @QuestionID, [Answer] = @Answer WHERE [ID] = @ID"
